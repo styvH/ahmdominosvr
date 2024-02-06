@@ -2,42 +2,50 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>4 Dominos sur une Table en VR - Vue de Haut</title>
+    <title>Scène A-Frame avec 28 dominos alignés et espacés</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
     <a-scene>
-        <!-- Caméra personnalisée avec vue de haut -->
-        <a-entity position="0 2.5 -5" rotation="-90 0 0">
-            <a-camera></a-camera>
-        </a-entity>
+        <!-- Caméra positionnée pour avoir une vue d'ensemble sur les dominos -->
+        <a-camera position="0 8 -10" rotation="-45 0 0"></a-camera>
 
-        <!-- Table -->
-        <a-box position="0 0.5 -5" rotation="0 0 0" width="5" height="0.1" depth="3" color="#964B00"></a-box>
-        
-        <!-- Ciel et sol pour le contexte -->
+        <!-- Ciel pour contexte -->
         <a-sky color="#ECECEC"></a-sky>
-        <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
 
-        <!-- Domino 1 -->
-        <a-box position="-1.5 0.6 -5" rotation="0 0 0" width="0.2" height="0.5" depth="1" color="white"></a-box>
-        <a-cylinder position="-1.5 0.7 -4.75" height="0.1" radius="0.05" color="black"></a-cylinder>
-        <a-cylinder position="-1.5 0.7 -5.25" height="0.1" radius="0.05" color="black"></a-cylinder>
+        <!-- Sol pour contexte -->
+        <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
 
-        <!-- Domino 2 -->
-        <a-box position="-0.5 0.6 -5" rotation="0 0 0" width="0.2" height="0.5" depth="1" color="white"></a-box>
-        <a-cylinder position="-0.5 0.7 -4.75" height="0.1" radius="0.05" color="black"></a-cylinder>
-        <a-cylinder position="-0.5 0.7 -5" height="0.1" radius="0.05" color="black"></a-cylinder>
-        <a-cylinder position="-0.5 0.7 -5.25" height="0.1" radius="0.05" color="black"></a-cylinder>
+        <script>
+          // Fonction pour créer un domino avec espacement
+          function createDomino(position, rotation) {
+            let domino = document.createElement('a-box');
+            domino.setAttribute('position', position);
+            domino.setAttribute('rotation', rotation);
+            domino.setAttribute('width', '1');
+            domino.setAttribute('height', '0.5');
+            domino.setAttribute('depth', '0.2');
+            domino.setAttribute('color', 'white');
+            document.querySelector('a-scene').appendChild(domino);
+          }
 
-        <!-- Domino 3 -->
-        <a-box position="0.5 0.6 -5" rotation="0 0 0" width="0.2" height="0.5" depth="1" color="white"></a-box>
-        <a-cylinder position="0.5 0.7 -4.75" height="0.1" radius="0.05" color="black"></a-cylinder>
-        <a-cylinder position="0.5 0.7 -5.25" height="0.1" radius="0.05" color="black"></a-cylinder>
+          // Définition de l'espacement
+          let spacing = 1.1; // Largeur du domino (1m) + espace souhaité (0.1m)
 
-        <!-- Domino 4 -->
-        <a-box position="1.5 0.6 -5" rotation="0 0 0" width="0.2" height="0.5" depth="1" color="white"></a-box>
-        <a-cylinder position="1.5 0.7 -5" height="0.1" radius="0.05" color="black"></a-cylinder>
+          // Génération des dominos à droite et à gauche avec rotation de 90 degrés
+          for (let i = 0; i < 7; i++) {
+            let positionZ = i * spacing - 3 * spacing; // Ajustement pour l'espacement
+            createDomino(`2 0.25 ${positionZ}`, '0 90 0');
+            createDomino(`-2 0.25 ${positionZ}`, '0 90 0');
+          }
+
+          // Génération des dominos devant et derrière sans rotation additionnelle
+          for (let i = 0; i < 7; i++) {
+            let positionX = i * spacing - 3 * spacing; // Ajustement pour l'espacement
+            createDomino(`${positionX} 0.25 3`, '0 0 0');
+            createDomino(`${positionX} 0.25 -3`, '0 0 0');
+          }
+        </script>
     </a-scene>
 </body>
 </html>
