@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dominos en Mouvement Continu</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene>
+    <!-- Table -->
+    <a-box position="0 0.25 -3" rotation="0 0 0" width="4" height="0.5" depth="2" color="#8A2BE2"></a-box>
+    
+    <!-- Lumière et caméra -->
+    <a-light type="ambient" color="#445451"></a-light>
+    <a-light type="directional" intensity="0.5" position="-2 4 -4"></a-light>
+    <a-camera position="0 2 5"></a-camera>
+  </a-scene>
+  <script>
+    function createDomino(x, z) {
+      // Crée un élément domino
+      const domino = document.createElement('a-box');
+      const y = 0.5; // Hauteur fixe pour tous les dominos
+      domino.setAttribute('position', `${x} ${y} ${z}`);
+      domino.setAttribute('width', '0.1');
+      domino.setAttribute('height', '0.5');
+      domino.setAttribute('depth', '0.2');
+      domino.setAttribute('color', '#4CC3D9');
+      
+      // Génère une animation de mouvement
+      const moveX = (Math.random() - 0.5) * 0.05; // Déplacement aléatoire en X
+      const moveZ = (Math.random() - 0.5) * 0.05; // Déplacement aléatoire en Z
+      domino.setAttribute('animation__position', `property: position; to: ${x+moveX} ${y} ${z+moveZ}; dur: 2000; loop: true; dir: alternate`);
+      
+      // Génère une animation de rotation
+      const rotateY = Math.random() * 360; // Rotation aléatoire en Y
+      domino.setAttribute('animation__rotation', `property: rotation; to: 0 ${rotateY} 0; dur: 2000; loop: true; dir: alternate`);
+
+      document.querySelector('a-scene').appendChild(domino); // Ajoute le domino à la scène
+    }
+    
+    // Création et placement initial de 10 dominos
+    for (let i = 0; i < 10; i++) {
+      const x = (Math.random() - 0.5) * 3;
+      const z = (Math.random() - 0.5) * 1.5 - 3;
+      createDomino(x, z);
+    }
+  </script>
+</body>
+</html>

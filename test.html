@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dominos en Mouvement Continu sur la Table</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene>
+    <!-- Table -->
+
+    <!-- Lumière et caméra -->
+    <a-light type="ambient" color="#445451"></a-light>
+    <a-light type="directional" intensity="0.5" position="-2 4 -4"></a-light>
+    <a-camera position="0 2 5"></a-camera>
+  </a-scene>
+  <script>
+    function createDomino(x, z) {
+      // Crée un élément domino couché
+      const domino = document.createElement('a-box');
+      const y = 0.3; // Hauteur ajustée pour que les dominos soient couchés
+      domino.setAttribute('position', `${x} ${y} ${z}`);
+      domino.setAttribute('rotation', '90 0 0'); // Orientation pour coucher le domino
+      domino.setAttribute('width', '0.5');
+      domino.setAttribute('height', '0.2');
+      domino.setAttribute('depth', '0.1');
+      domino.setAttribute('color', '#4CC3D9');
+      
+      // Génère des animations pour changer la position de manière aléatoire sur la table
+      const deltaX = (Math.random() - 0.5) * 0.2; // Déplacement aléatoire en X
+      const deltaZ = (Math.random() - 0.5) * 0.2; // Déplacement aléatoire en Z
+      domino.setAttribute('animation__position', `property: position; to: ${x+deltaX} ${y} ${z+deltaZ}; dur: 4000; loop: true; easing: easeInOutQuad; dir: alternate`);
+
+      document.querySelector('a-scene').appendChild(domino); // Ajoute le domino à la scène
+    }
+    
+    // Création et placement initial de plusieurs dominos
+    for (let i = 0; i < 20; i++) {
+      const x = (Math.random() - 0.5) * 3;
+      const z = (Math.random() - 0.5) * 1.5 - 3;
+      createDomino(x, z);
+    }
+  </script>
+</body>
+</html>
