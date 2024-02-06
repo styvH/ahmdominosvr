@@ -2,19 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scène A-Frame avec 28 dominos alignés et espacés</title>
+    <title>Scène A-Frame avec dominos espacés de 1m</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
     <a-scene>
-        <!-- Caméra positionnée pour avoir une vue d'ensemble sur les dominos -->
-        <a-camera position="0 8 -10" rotation="-45 0 0"></a-camera>
+        <!-- Caméra positionnée pour être face aux dominos de devant -->
+        <a-camera position="0 2.5 11" rotation="0 0 0"></a-camera>
 
         <!-- Ciel pour contexte -->
         <a-sky color="#ECECEC"></a-sky>
 
         <!-- Sol pour contexte -->
-        <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
+        <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#7BC8A4"></a-plane>
 
         <script>
           // Fonction pour créer un domino avec espacement
@@ -29,21 +29,22 @@
             document.querySelector('a-scene').appendChild(domino);
           }
 
-          // Définition de l'espacement
-          let spacing = 1.1; // Largeur du domino (1m) + espace souhaité (0.1m)
+          // Définition de l'espacement entre les dominos sur la même ligne
+          let spacing = 1.1; // Largeur du domino (1m) + espace de 10cm
 
-          // Génération des dominos à droite et à gauche avec rotation de 90 degrés
+          // Positions ajustées pour les dominos
+          let distanceX = 7; // Pour les dominos à droite et à gauche
+          let distanceZ = 7; // Pour les dominos devant et derrière
+
+          // Génération des dominos
           for (let i = 0; i < 7; i++) {
             let positionZ = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-            createDomino(`2 0.25 ${positionZ}`, '0 90 0');
-            createDomino(`-2 0.25 ${positionZ}`, '0 90 0');
-          }
-
-          // Génération des dominos devant et derrière sans rotation additionnelle
-          for (let i = 0; i < 7; i++) {
+            createDomino(`${distanceX} 0.25 ${positionZ}`, '0 90 0'); // À droite
+            createDomino(`${-distanceX} 0.25 ${positionZ}`, '0 90 0'); // À gauche
+            
             let positionX = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-            createDomino(`${positionX} 0.25 3`, '0 0 0');
-            createDomino(`${positionX} 0.25 -3`, '0 0 0');
+            createDomino(`${positionX} 0.25 ${distanceZ}`, '0 0 0'); // Devant
+            createDomino(`${positionX} 0.25 ${-distanceZ}`, '0 0 0'); // Derrière
           }
         </script>
     </a-scene>
