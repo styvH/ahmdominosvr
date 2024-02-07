@@ -2,11 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scène A-Frame avec dominos espacés de 1m</title>
+    <title>KISA DOMINO</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
     <a-scene>
+        <!-- Préchargement des textures -->
+        <a-assets>
+            <img id="domino-texture" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34407_1280.png" crossOrigin="anonymous">
+        </a-assets>
+
         <!-- Caméra positionnée pour être face aux dominos de devant -->
         <a-camera position="0 2.5 11" rotation="0 0 0"></a-camera>
 
@@ -25,7 +30,7 @@
             domino.setAttribute('width', '1');
             domino.setAttribute('height', '0.5');
             domino.setAttribute('depth', '0.2');
-            domino.setAttribute('color', 'white');
+            domino.setAttribute('src', '#domino-texture'); // Utilisation de la texture préchargée
             document.querySelector('a-scene').appendChild(domino);
           }
 
