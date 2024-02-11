@@ -45,7 +45,10 @@
         <a-entity id="rightHand" hand-tracking-controls="hand: right;"></a-entity>
         <a-entity id="leftHand" hand-tracking-grab-controls="hand: left;"></a-entity>
         <a-entity id="rightHand" hand-tracking-grab-controls="hand: right;"></a-entity>
-                
+       
+        <a-entity oculus-touch-controls="hand: left" thumbstick-logging></a-entity>
+        <a-entity oculus-touch-controls="hand: right" thumbstick-logging></a-entity>
+
         <!-- Ciel pour contexte -->
         <a-sky color="#ECECEC"></a-sky>
 
@@ -53,6 +56,18 @@
         <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
         <script>
+
+AFRAME.registerComponent('thumbstick-logging',{
+  init: function () {
+    this.el.addEventListener('thumbstickmoved', this.logThumbstick);
+  },
+  logThumbstick: function (evt) {
+    if (evt.detail.y > 0.95) { console.log("DOWN"); }
+    if (evt.detail.y < -0.95) { console.log("UP"); }
+    if (evt.detail.x < -0.95) { console.log("LEFT"); }
+    if (evt.detail.x > 0.95) { console.log("RIGHT"); }
+  }
+});
           // Fonction pour créer un domino avec espacement et texture spécifique
           function createDomino(position, rotation, textureId) {
             let domino = document.createElement('a-box');
