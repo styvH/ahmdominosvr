@@ -3,13 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>KISA DOMINO</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <!-- Importation des composants supplémentaires pour la manipulation et le déplacement -->
-    <script src="https://unpkg.com/aframe-teleport-controls@1.1.0/dist/aframe-teleport-controls.min.js"></script>
-    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
 <body>
-    <a-scene>
+    <a-scene obb-collider="showColliders: false">
         <!-- Préchargement des textures -->
         <a-assets>
             <!-- Textures uniques pour chaque domino -->
@@ -42,20 +39,13 @@
             <img id="D27" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34407_1280.png" crossorigin="anonymous">
         </a-assets>
 
-         <!-- Mise à jour de la caméra pour inclure les contrôles de déplacement et de manipulation -->
-        <a-entity id="rig" position="0 1.6 0">
-            <a-camera position="0 0 0" rotation="0 0 0" wasd-controls look-controls>
-                <!-- Ajout de la capacité de téléportation pour le déplacement en VR -->
-                <a-entity teleport-controls="cameraRig: #rig; teleportOrigin: a-camera;"></a-entity>
-                <!-- Ajout des mains pour interagir avec les objets -->
-                <a-entity id="left-hand" super-hands hand-controls="hand: left"></a-entity>
-                <a-entity id="right-hand" super-hands hand-controls="hand: right"></a-entity>
-            </a-camera>
-        </a-entity>
-
         <!-- Caméra positionnée pour être face aux dominos de devant -->
         <a-camera position="0 2.5 11" rotation="0 0 0"></a-camera>
-
+        <a-entity id="leftHand" hand-tracking-controls="hand: left;"></a-entity>
+        <a-entity id="rightHand" hand-tracking-controls="hand: right;"></a-entity>
+        <a-entity id="leftHand" hand-tracking-grab-controls="hand: left;"></a-entity>
+        <a-entity id="rightHand" hand-tracking-grab-controls="hand: right;"></a-entity>
+                
         <!-- Ciel pour contexte -->
         <a-sky color="#ECECEC"></a-sky>
 
