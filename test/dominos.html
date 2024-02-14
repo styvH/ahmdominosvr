@@ -8,8 +8,8 @@
         <!-- Préchargement des textures -->
         <a-assets>
             <!-- Textures uniques pour chaque domino -->
-            <img id="D1" name="0-0" src="/img/domino-00.png">
-            <img id="D2" name="0-1" src="/img/domino-01.png">
+            <img id="D1" name="0-0" src="../img/domino-00.png">
+            <img id="D2" name="0-1" src="../img/domino-01.png">
             <img id="D3" name="0-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34382_1280.png" crossorigin="anonymous">
             <img id="D4" name="0-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34383_1280.png" crossorigin="anonymous">
             <img id="D5" name="0-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34384_1280.png" crossorigin="anonymous">
@@ -63,44 +63,65 @@
 
         <script>
 
-AFRAME.registerComponent('thumbstick-logging',{
-  init: function () {
-    this.el.addEventListener('thumbstickmoved', this.logThumbstick);
-  },
-  logThumbstick: function (evt) {
-    if (evt.detail.y > 0.95) { console.log("DOWN"); }
-    if (evt.detail.y < -0.95) { console.log("UP"); }
-    if (evt.detail.x < -0.95) { console.log("LEFT"); }
-    if (evt.detail.x > 0.95) { console.log("RIGHT"); }
-  }
-});
+          AFRAME.registerComponent('thumbstick-logging',{
+            init: function () {
+              this.el.addEventListener('thumbstickmoved', this.logThumbstick);
+            },
+            logThumbstick: function (evt) {
+              if (evt.detail.y > 0.95) { console.log("DOWN"); }
+              if (evt.detail.y < -0.95) { console.log("UP"); }
+              if (evt.detail.x < -0.95) { console.log("LEFT"); }
+              if (evt.detail.x > 0.95) { console.log("RIGHT"); }
+            }
+          });
           // Fonction pour créer un domino avec espacement et texture spécifique
           function createDomino(position, rotation, textureId) {
-            let domino = document.createElement('a-box');
-            domino.setAttribute('position', position);
-            domino.setAttribute('rotation', rotation);
-            domino.setAttribute('width', '1');
-            domino.setAttribute('height', '1');
-            domino.setAttribute('depth', '0.2');
-            domino.setAttribute('material', 'src: #' + textureId); // Attribution de la texture
-            document.querySelector('a-scene').appendChild(domino);
-            console.log(textureId);
-          }
+            // Conteneur pour le domino
+            let dominoContainer = document.createElement('a-entity');
+            dominoContainer.setAttribute('position', position);
+            dominoContainer.setAttribute('rotation', rotation);
+
+            // Corps du domino
+            let dominoBody = document.createElement('a-box');
+            dominoBody.setAttribute('width', '1');
+            dominoBody.setAttribute('height', '1');
+            dominoBody.setAttribute('depth', '0.2');
+            dominoBody.setAttribute('color', '#FFF'); // Couleur de fond du domino
+
+            // Face avec texture
+            let dominoFace = document.createElement('a-plane');
+            dominoFace.setAttribute('position', '0 0 0.105'); // Ajuster pour éviter le z-fighting
+            dominoFace.setAttribute('width', '1');
+            dominoFace.setAttribute('height', '1');
+            dominoFace.setAttribute('material', `src: #${textureId}`);
+
+            // Ajout du corps et de la face au conteneur
+            dominoContainer.appendChild(dominoBody);
+            dominoContainer.appendChild(dominoFace);
+
+            // Ajout du conteneur à la scène
+            document.querySelector('a-scene').appendChild(dominoContainer);
+        }
 
           // Positions ajustées pour les dominos
           let distanceX = 7; // Pour les dominos à droite et à gauche
           let distanceZ = 7; // Pour les dominos devant et derrière
           let spacing = 1.1; // Largeur du domino (1m) + espace de 10cm
 
-          // Génération des dominos avec des textures uniques
+          // Génération des dominos avec des textures uniques et orientation correcte
           for (let i = 0; i < 7; i++) {
-            let positionZ = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-            createDomino(`${distanceX} 0.5 ${positionZ}`, '0 90 0', `D${i+1}`); // À droite
-            createDomino(`${-distanceX} 0.5 ${positionZ}`, '0 90 0', `D${i+8}`); // À gauche
-            
-            let positionX = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-            createDomino(`${positionX} 0.5 ${distanceZ}`, '0 0 0', `D${i+15}`); // Devant
-            createDomino(`${positionX} 0.5 ${-distanceZ}`, '0 0 0', `D${i+22}`); // Derrière
+              let positionZRightLeft = i * spacing - 3 * spacing; // Ajustement pour l'espacement
+              let positionXFrontBack = i * spacing - 3 * spacing; // Ajustement pour l'espacement
+
+              // Dominos à droite (doivent être orientés de 90 degrés pour faire face au centre)
+              createDomino(`${distanceX} 0.5 ${positionZRightLeft}`, '0 90 0', `D${i+1}`);
+              // Dominos à gauche (doivent être orientés de -90 degrés pour faire face au centre)
+              createDomino(`${-distanceX} 0.5 ${positionZRightLeft}`, '0 -90 0', `D${i+8}`);
+              
+              // Dominos devant (doivent être orientés de 0 degré pour faire face au centre)
+              createDomino(`${positionXFrontBack} 0.5 ${distanceZ}`, '0 0 0', `D${i+15}`);
+              // Dominos derrière (doivent être orientés de 180 degrés pour faire face au centre)
+              createDomino(`${positionXFrontBack} 0.5 ${-distanceZ}`, '0 180 0', `D${i+22}`);
           }
         </script>
     </a-scene>
