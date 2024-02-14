@@ -1,25 +1,23 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/@alexvr/aframe-teleportation-component@^1.0.0/dist/aframe-teleportation-component.min.js"></script>
+    <script src="https://cdn.glitch.me/faaefaf3-eb16-43fc-baea-8eebeff7cfae%2FAFGrabbables.min.js"></script>
   </head>
   <body>
     <a-scene>
       <!-- Définition de l'entité qui représentera le joueur -->
-      <a-entity id="player" camera look-control wasd-controls navigation-controls></a-entity>
+      <a-entity id="player" camera look-control teleportation-controls wasd-controls laser-controls></a-entity>
+      
       <!-- Définition d'une sphère qui sera attrapable -->
-      <a-sphere position="-1 0.5 -3" radius="0.5" color="#4CC3D9" grabbable></a-sphere>
+      <a-box position="-1 0.5 -3" width="1" height="1" depth="1" color="#4CC3D9" grabbable dynamic-body></a-box>
 
       <!-- Entité représentant la main droite du joueur -->
-      <a-entity id="rightHand" hand-model="hand: right" raycaster="objects: .collidable; far: 2"></a-entity>
+      <a-entity id="rightHand" hand-model="hand: right" raycaster="far: 2"></a-entity>
 
       <!-- Entité représentant la main gauche du joueur -->
-      <a-entity id="leftHand" hand-model="hand: left" raycaster="objects: .collidable; far: 2"></a-entity>
-          
+      <a-entity id="leftHand" hand-model="hand: left" raycaster="far: 2"></a-entity>
+            
     </a-scene>
-<script>
-
-  
-</script>
-
   </body>
 </html>
