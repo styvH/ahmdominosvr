@@ -12,10 +12,13 @@
       <!-- Définition de l'entité qui représentera le joueur -->
       <a-entity id="player" camera look-control wasd-controls navigation-controls>
               <!-- Entité représentant la main droite du joueur -->
-      <a-entity id="left-hand" hand-controls="hand: left" super-hands raycaster="objects: .grabbable; far: 2"></a-entity>
+        <a-entity id="left-hand" hand-controls="hand: left" super-hands raycaster="objects: .grabbable; far: 2"></a-entity>
 
-      <a-entity id="right-hand" laser-controls="hand: right" raycaster="objects: .clickable" line="color: red; opacity: 0.5">
-      </a-entity>
+        <!-- Contrôleur laser pour la main droite -->
+        <a-entity id="right-hand" laser-controls="hand: right" raycaster="objects: .clickable" line="color: red; opacity: 0.5"></a-entity>
+
+        <!-- Pop-up de confirmation (initialement masqué) -->
+        <a-entity id="confirmation-popup" position="0 2 -4" text="value: Domino placé!; align: center;" visible="false"></a-entity>
       </a-entity>
 
       <!-- Définition d'une sphère qui sera attrapable -->
@@ -69,7 +72,6 @@
 
         <!-- Table pour contexte -->
         <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
-  <a-entity id="right-hand" laser-controls="hand: right" raycaster="objects: .clickable" line="color: red; opacity: 0.5">
   </a-entity>
         <script>
           
@@ -123,25 +125,43 @@
               createDomino(`${positionXFrontBack} 0.5 ${-distanceZ}`, '0 180 0', `D${i+22}`);
           }
 
-            // Ajout d'une classe 'clickable' aux dominos pour les rendre sélectionnables par le laser
-            document.addEventListener('DOMContentLoaded', function () {
-              const dominos = document.querySelectorAll('a-box');
-              dominos.forEach(domino => {
-                domino.classList.add('clickable');
-              });
-            });
 
-            // Gestion de la sélection et du déplacement des dominos
-            document.querySelector('a-scene').addEventListener('click', function (event) {
-              // Identifier l'élément sélectionné
-              const selectedDomino = event.target;
+          
+          
+    // Ajout d'une classe 'clickable' aux dominos et gestion de la sélection/déplacement
+    document.addEventListener('DOMContentLoaded', function () {
+      const sceneEl = document.querySelector('a-scene');
+      sceneEl.querySelectorAll('a-box').forEach(domino => {
+        domino.classList.add('clickable');
+        domino.setAttribute('data-state', 'idle'); // État initial du domino
+      });
 
-              if (selectedDomino.classList.contains('clickable')) {
-                // Logique pour sélectionner et déplacer le domino
-                console.log('Domino sélectionné:', selectedDomino);
-                // Vous pouvez ici ajouter la logique pour déplacer le domino ou modifier ses propriétés
-              }
-            });
+      // Gestionnaire pour sélectionner/déplacer/déposer les dominos
+      sceneEl.addEventListener('triggerdown', function (event) {
+        let domino = event.detail.intersectedEl;
+        if (domino && domino.classList.contains('clickable')) {
+          switch (domino.getAttribute('data-state')) {
+            case 'idle':
+              // Sélection et préparation au déplacement
+              domino.setAttribute('data-state', 'moving');
+              console.log('Domino sélectionné pour déplacement');
+              break;
+            case 'moving':
+              // Déposer le domino couché
+              domino.setAttribute('data-state', 'placed');
+              domino.setAttribute('rotation', {x: -90, y: 0, z: 0}); // Exemple de rotation pour coucher le domino
+              // Afficher le message de confirmation
+              document.getElementById('confirmation-popup').setAttribute('visible', true);
+              setTimeout(() => {
+                document.getElementById('confirmation-popup').setAttribute('visible', false);
+              }, 2000); // Masquer le message après 2 secondes
+              console.log('Domino placé');
+              break;
+            // Autres cas si nécessaire
+          }
+        }
+      });
+    });
         </script>
 
     </a-scene>
