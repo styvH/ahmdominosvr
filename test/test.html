@@ -5,42 +5,19 @@
     <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene obb-collider="showColliders: false"></a-scene>
       
         <a-entity id="player">
-            <a-entity hand-controls="hand: left"></a-entity>
-            <a-entity id="blockHand" hand-controls="hand: right" laser-controls raycaster="near: 0.5" intersection-spawn="event: click; mixin: voxel"></a-entity>
+            <a-entity id="leftHand" oculus-touch-controls ="hand: left"  thumbstick-controls></a-entity>
+            <a-entity id="righHand" hand-tracking-grab-controls="hand: right" laser-controls raycaster="near: 0.5" intersection-spawn="event: click; mixin: voxel"></a-entity>
             <a-camera></a-camera>
         </a-entity>
+        <a-entity camera look-controls position="0 1.6 0"></a-entity>
 
       <!-- Commencez avec une configuration simple sans déplacement avancé -->
       <a-sphere position="-1 0.5 -3" radius="0.5" color="#4CC3D9" class="grabbable" super-hands></a-sphere>
       <!-- Ajoutez progressivement les composants pour tester -->
     </a-scene>
 
-    <script>
-        document.querySelector('#blockHand').addEventListener(`click`, function (evt) {
-  // Create a blank entity.
-  var newVoxelEl = document.createElement('a-entity');
-
-  // Use the mixin to make it a voxel.
-  newVoxelEl.setAttribute('mixin', 'voxel');
-
-  // Get normal of the face of intersection and scale it down a bit
-  var normal = evt.detail.intersection.face.normal;
-  normal.multiplyScalar(0.25);
-
-  // Get the position of the intersection and add our scaled normal
-  var position = evt.detail.intersection.point;
-  position.add(normal);
-
-  // Set the position using intersection point. The `snap` component above which
-  // is part of the mixin will snap it to the closest half meter.
-  newVoxelEl.setAttribute('position', position);
-
-  // Add to the scene with `appendChild`.
-  this.appendChild(newVoxelEl);
-});
-    </script>
   </body>
 </html>
