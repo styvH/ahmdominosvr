@@ -2,15 +2,45 @@
   <head>
     <!-- Assurez-vous que les scripts sont à jour -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-super-hands-component/dist/aframe-super-hands-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-extras/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
   </head>
   <body>
     <a-scene>
-      <a-entity id="player" camera look-controls wasd-controls></a-entity>
+      
+        <a-entity id="player">
+            <a-entity hand-controls="hand: left"></a-entity>
+            <a-entity id="blockHand" hand-controls="hand: right" laser-controls raycaster="near: 0.5" intersection-spawn="event: click; mixin: voxel"></a-entity>
+            <a-camera></a-camera>
+        </a-entity>
+
       <!-- Commencez avec une configuration simple sans déplacement avancé -->
       <a-sphere position="-1 0.5 -3" radius="0.5" color="#4CC3D9" class="grabbable" super-hands></a-sphere>
       <!-- Ajoutez progressivement les composants pour tester -->
     </a-scene>
+
+    <script>
+        document.querySelector('#blockHand').addEventListener(`click`, function (evt) {
+  // Create a blank entity.
+  var newVoxelEl = document.createElement('a-entity');
+
+  // Use the mixin to make it a voxel.
+  newVoxelEl.setAttribute('mixin', 'voxel');
+
+  // Get normal of the face of intersection and scale it down a bit
+  var normal = evt.detail.intersection.face.normal;
+  normal.multiplyScalar(0.25);
+
+  // Get the position of the intersection and add our scaled normal
+  var position = evt.detail.intersection.point;
+  position.add(normal);
+
+  // Set the position using intersection point. The `snap` component above which
+  // is part of the mixin will snap it to the closest half meter.
+  newVoxelEl.setAttribute('position', position);
+
+  // Add to the scene with `appendChild`.
+  this.appendChild(newVoxelEl);
+});
+    </script>
   </body>
 </html>
