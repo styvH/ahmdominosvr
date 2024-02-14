@@ -1,23 +1,26 @@
 <html>
   <head>
+    <!-- Inclusion d'A-Frame -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/@alexvr/aframe-teleportation-component@^1.0.0/dist/aframe-teleportation-component.min.js"></script>
-    <script src="https://cdn.glitch.me/faaefaf3-eb16-43fc-baea-8eebeff7cfae%2FAFGrabbables.min.js"></script>
+    <!-- Inclusion de super-hands pour l'interaction -->
+    <script src="https://unpkg.com/aframe-super-hands-component/dist/aframe-super-hands-component.min.js"></script>
+    <!-- Inclusion d'aframe-extras pour les contrôles de mouvement supplémentaires -->
+    <script src="https://unpkg.com/aframe-extras/dist/aframe-extras.min.js"></script>
   </head>
   <body>
     <a-scene>
       <!-- Définition de l'entité qui représentera le joueur -->
-      <a-entity id="player" camera look-control teleportation-controls wasd-controls laser-controls></a-entity>
-      
+      <a-entity id="player" camera look-controls wasd-controls="acceleration: 150" movement-controls="fly: true"></a-entity>
+
       <!-- Définition d'une sphère qui sera attrapable -->
-      <a-box position="-1 0.5 -3" width="1" height="1" depth="1" color="#4CC3D9" grabbable dynamic-body></a-box>
+      <a-sphere position="-1 0.5 -3" radius="0.5" color="#4CC3D9" class="grabbable" super-hands></a-sphere>
 
       <!-- Entité représentant la main droite du joueur -->
-      <a-entity id="rightHand" hand-model="hand: right" raycaster="far: 2"></a-entity>
+      <a-entity id="rightHand" hand-controls="hand: right" super-hands raycaster="objects: .grabbable; far: 2"></a-entity>
 
       <!-- Entité représentant la main gauche du joueur -->
-      <a-entity id="leftHand" hand-model="hand: left" raycaster="far: 2"></a-entity>
-            
+      <a-entity id="leftHand" hand-controls="hand: left" super-hands raycaster="objects: .grabbable; far: 2"></a-entity>
+          
     </a-scene>
   </body>
 </html>
