@@ -10,7 +10,7 @@
   <body>
     <a-scene>
       <!-- Définition de l'entité qui représentera le joueur -->
-      <a-entity id="player" camera look-controls movement-controls="controls:gamepad"></a-entity>
+      <a-entity id="player" camera look-controls thumbstick-movement></a-entity>
 
       <!-- Définition d'une sphère qui sera attrapable -->
       <a-sphere position="-1 0.5 -3" radius="0.5" color="#4CC3D9" class="grabbable" super-hands></a-sphere>
@@ -71,6 +71,26 @@
         <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
         <script>
+
+          AFRAME.registerComponent('thumbstick-movement', {
+            init: function () {
+              this.el.addEventListener('axismove', (event) => {
+                var axis = event.detail.axis;
+                var el = this.el;
+                var position = el.getAttribute('position');
+
+                // Déplacement vers l'avant/arrière
+                position.z += axis[1] * 0.05;
+                // Déplacement latéral
+                position.x += axis[0] * 0.05;
+
+                el.setAttribute('position', position);
+              });
+            }
+          });
+
+
+
           // Fonction pour créer un domino avec espacement et texture spécifique
           function createDomino(position, rotation, textureId) {
             // Conteneur pour le domino
