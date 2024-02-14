@@ -1,44 +1,49 @@
-<!DOCTYPE html>
-<html>
 <head>
     <meta charset="utf-8">
     <title>KISA DOMINO</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
 <body>
     <a-scene>
         <!-- Préchargement des textures -->
         <a-assets>
-            <!-- Textures uniques pour chaque domino -->
-            <img id="D1" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34396_1280.png" crossorigin="anonymous">
-            <img id="D2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34388_1280.png" crossorigin="anonymous">
-            <img id="D3" src="https://cdn.pixabay.com/photo/2012/05/07/11/07/domino-48089_1280.png" crossorigin="anonymous">
-            <img id="D4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/dominoes-34389_1280.png" crossorigin="anonymous">
-            <img id="D5" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34384_1280.png" crossorigin="anonymous">
-            <img id="D6" src="https://cdn.pixabay.com/photo/2012/04/14/15/57/domino-34381_1280.png" crossorigin="anonymous">
-            <img id="D7" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34404_1280.png" crossorigin="anonymous">
-            <img id="D8" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34398_1280.png" crossorigin="anonymous">
-            <img id="D9" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34402_1280.png" crossorigin="anonymous">
-            <img id="D10" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34390_1280.png" crossorigin="anonymous">
-            <img id="D11" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34393_1280.png" crossorigin="anonymous">
-            <img id="D12" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34382_1280.png" crossorigin="anonymous">
-            <img id="D13" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/dominoes-34405_1280.png" crossorigin="anonymous">
-            <img id="D14" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34394_1280.png" crossorigin="anonymous">
-            <img id="D15" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34383_1280.png" crossorigin="anonymous">
-            <img id="D16" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34395_1280.png" crossorigin="anonymous">
-            <img id="D17" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34401_1280.png" crossorigin="anonymous">
-            <img id="D18" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34391_1280.png" crossorigin="anonymous">
-            <img id="D19" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34399_1280.png" crossorigin="anonymous">
-            <img id="D20" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34400_1280.png" crossorigin="anonymous">
-            <img id="D21" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34392_1280.png" crossorigin="anonymous">
-            <img id="D22" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34397_1280.png" crossorigin="anonymous">
-            <img id="D23" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34386_1280.png" crossorigin="anonymous">
-            <img id="D24" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34403_1280.png" crossorigin="anonymous">
-            <img id="D25" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34385_1280.png" crossorigin="anonymous">
-            <img id="D26" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34387_1280.png" crossorigin="anonymous">
-            <img id="D27" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34407_1280.png" crossorigin="anonymous">
-        </a-assets>
+          <!-- Textures uniques pour chaque domino -->
+          <img id="D1" name="0-0" src="img/domino-00.png" crossorigin="anonymous">
+          <img id="D2" name="0-1" src="https://cdn.pixabay.com/photo/2012/04/14/15/57/domino-34381_1280.png" crossorigin="anonymous">
+          <img id="D3" name="0-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34382_1280.png" crossorigin="anonymous">
+          <img id="D4" name="0-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34383_1280.png" crossorigin="anonymous">
+          <img id="D5" name="0-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34384_1280.png" crossorigin="anonymous">
+          <img id="D6" name="0-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34385_1280.png" crossorigin="anonymous">
+          <img id="D7" name="0-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34386_1280.png" crossorigin="anonymous">
+          
+          <img id="D8" name="1-1" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34387_1280.png" crossorigin="anonymous">          
+          <img id="D9" name="1-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34388_1280.png" crossorigin="anonymous">
+          <img id="D10" name="1-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/dominoes-34389_1280.png" crossorigin="anonymous">
+          <img id="D11" name="1-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34390_1280.png" crossorigin="anonymous">
+          <img id="D12" name="1-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34391_1280.png" crossorigin="anonymous">
+          <img id="D13" name="1-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34392_1280.png" crossorigin="anonymous">
+          
+          
+          <img id="D14" name="2-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34393_1280.png" crossorigin="anonymous">
+          <img id="D15" name="2-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34394_1280.png" crossorigin="anonymous">
+          <img id="D16" name="2-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34395_1280.png" crossorigin="anonymous">
+          <img id="D17" name="2-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34396_1280.png" crossorigin="anonymous">     
+          <img id="D18" name="2-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34397_1280.png" crossorigin="anonymous">
+         
+          <img id="D19" name="3-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34398_1280.png" crossorigin="anonymous">
+          <img id="D20" name="3-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34399_1280.png" crossorigin="anonymous">
+          <img id="D21" name="3-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34400_1280.png" crossorigin="anonymous">
+          <img id="D22" name="3-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34401_1280.png" crossorigin="anonymous">
+          
+          <img id="D23" name="4-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34402_1280.png" crossorigin="anonymous">
+          <img id="D24" name="4-5" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34403_1280.png" crossorigin="anonymous">
+          <img id="D25" name="4-6" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34404_1280.png" crossorigin="anonymous">
+          
+          <img id="D26" name="5-5" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/dominoes-34405_1280.png" crossorigin="anonymous">
+          <img id="D27" name="5-6" src="https://cdn.pixabay.com/photo/2012/05/07/11/07/domino-48089_1280.png" crossorigin="anonymous">
 
+          <img id="D28" name="6-6" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34407_1280.png" crossorigin="anonymous">
+      </a-assets>
         <!-- Caméra positionnée pour être face aux dominos de devant -->
         <a-camera position="0 2.5 11" rotation="0 0 0"></a-camera>
 
@@ -51,32 +56,53 @@
         <script>
           // Fonction pour créer un domino avec espacement et texture spécifique
           function createDomino(position, rotation, textureId) {
-            let domino = document.createElement('a-box');
-            domino.setAttribute('position', position);
-            domino.setAttribute('rotation', rotation);
-            domino.setAttribute('width', '1');
-            domino.setAttribute('height', '1');
-            domino.setAttribute('depth', '0.2');
-            domino.setAttribute('material', 'src: #' + textureId); // Attribution de la texture
-            document.querySelector('a-scene').appendChild(domino);
-          }
+            // Conteneur pour le domino
+            let dominoContainer = document.createElement('a-entity');
+            dominoContainer.setAttribute('position', position);
+            dominoContainer.setAttribute('rotation', rotation);
+
+            // Corps du domino
+            let dominoBody = document.createElement('a-box');
+            dominoBody.setAttribute('width', '1');
+            dominoBody.setAttribute('height', '1');
+            dominoBody.setAttribute('depth', '0.2');
+            dominoBody.setAttribute('color', '#FFF'); // Couleur de fond du domino
+
+            // Face avec texture
+            let dominoFace = document.createElement('a-plane');
+            dominoFace.setAttribute('position', '0 0 0.105'); // Ajuster pour éviter le z-fighting
+            dominoFace.setAttribute('width', '1');
+            dominoFace.setAttribute('height', '1');
+            dominoFace.setAttribute('material', `src: #${textureId}`);
+
+            // Ajout du corps et de la face au conteneur
+            dominoContainer.appendChild(dominoBody);
+            dominoContainer.appendChild(dominoFace);
+
+            // Ajout du conteneur à la scène
+            document.querySelector('a-scene').appendChild(dominoContainer);
+        }
 
           // Positions ajustées pour les dominos
           let distanceX = 7; // Pour les dominos à droite et à gauche
           let distanceZ = 7; // Pour les dominos devant et derrière
           let spacing = 1.1; // Largeur du domino (1m) + espace de 10cm
 
-          // Génération des dominos avec des textures uniques
+          // Génération des dominos avec des textures uniques et orientation correcte
           for (let i = 0; i < 7; i++) {
-            let positionZ = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-            createDomino(`${distanceX} 0.5 ${positionZ}`, '0 90 0', `D${i+1}`); // À droite
-            createDomino(`${-distanceX} 0.5 ${positionZ}`, '0 90 0', `D${i+8}`); // À gauche
-            
-            let positionX = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-            createDomino(`${positionX} 0.5 ${distanceZ}`, '0 0 0', `D${i+15}`); // Devant
-            createDomino(`${positionX} 0.5 ${-distanceZ}`, '0 0 0', `D${i+22}`); // Derrière
+              let positionZRightLeft = i * spacing - 3 * spacing; // Ajustement pour l'espacement
+              let positionXFrontBack = i * spacing - 3 * spacing; // Ajustement pour l'espacement
+
+              // Dominos à droite (doivent être orientés de 90 degrés pour faire face au centre)
+              createDomino(`${distanceX} 0.5 ${positionZRightLeft}`, '0 90 0', `D${i+1}`);
+              // Dominos à gauche (doivent être orientés de -90 degrés pour faire face au centre)
+              createDomino(`${-distanceX} 0.5 ${positionZRightLeft}`, '0 -90 0', `D${i+8}`);
+              
+              // Dominos devant (doivent être orientés de 0 degré pour faire face au centre)
+              createDomino(`${positionXFrontBack} 0.5 ${distanceZ}`, '0 0 0', `D${i+15}`);
+              // Dominos derrière (doivent être orientés de 180 degrés pour faire face au centre)
+              createDomino(`${positionXFrontBack} 0.5 ${-distanceZ}`, '0 180 0', `D${i+22}`);
           }
         </script>
     </a-scene>
 </body>
-</html>
