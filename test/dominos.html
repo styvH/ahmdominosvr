@@ -42,13 +42,6 @@
       <a-sky color="#ECECEC"></a-sky>
       <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
-      <a-box id="table" position="0 0.5 0" rotation="0 0 0" width="10" height="0.3" depth="10" color="#7BC8A4"></a-box>
-
-
-      <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
-
-      
-
       <!-- Positionnement du joueur -->
         <a-entity id="player" position="0 2.5 11">
           <a-entity camera look-controls wasd-controls position="0 0 0"></a-entity>
@@ -88,115 +81,36 @@
 
       <script>
 
-        let dominoInHover = null; // Référence au domino actuellement en survol
-        let selectedDomino = null; // Référence au domino actuellement sélectionné
 
-          // Écouter les clics sur le sol
-          const table = document.getElementById('table');
-          table.addEventListener('click', function(event) {
-            if (selectedDomino) {
-              // Calculer la nouvelle position sur la table
-              const clickPosition = event.detail.intersection.point;
-              const newPosition = `${clickPosition.x} 1 ${clickPosition.z}`; // Ajuster la hauteur si nécessaire
 
-              // Mettre à jour la position du domino
-              selectedDomino.setAttribute('position', newPosition);
 
-              // Mettre le domino en position couchée et le rendre plus petit
-              selectedDomino.setAttribute('rotation', '90 0 0'); // Rotation pour le coucher
-              selectedDomino.setAttribute('scale', '0.5 0.5 0.5'); // Réduire la taille
-
-              // Marquer le domino comme placé pour empêcher d'autres déplacements
-              selectedDomino.setAttribute('data-placed', 'true');
-
-              // Désélectionner le domino
-              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
-              selectedDomino = null;
-            }
-          });
-
-          // Fonction pour gérer la sélection des dominos
-        function handleDominoSelection(event) {
-          // Vérifiez si le rayon intersecte un domino
-          const intersectedElement = event.detail.intersectedEl;
-          if (intersectedElement && intersectedElement.classList.contains('domino')) {
-            if (selectedDomino && selectedDomino !== intersectedElement) {
-              // Réinitialise la couleur de l'ancien domino sélectionné
-              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
-            }
-            // Toggle la sélection du domino
-            if (selectedDomino === intersectedElement) {
-              intersectedElement.firstChild.setAttribute('material', 'color', '#FFF');
-              selectedDomino = null;
-            } else {
-              intersectedElement.firstChild.setAttribute('material', 'color', 'blue');
-              selectedDomino = intersectedElement;
-            }
-          }
-        }
-
-        [leftHand, rightHand].forEach(controller => {
-          controller.addEventListener('triggerdown', handleDominoSelection);
-        });
-
-        // Mise à jour de la fonction de création de domino pour gérer le survol et la sélection
+        // Création des dominos
         function createDomino(position, rotation, textureId) {
+          // Création de l'entité domino
           let dominoContainer = document.createElement('a-entity');
           dominoContainer.setAttribute('position', position);
           dominoContainer.setAttribute('rotation', rotation);
-          dominoContainer.setAttribute('class', 'domino');
 
+          // Corps du domino
           let dominoBody = document.createElement('a-box');
           dominoBody.setAttribute('width', '1');
           dominoBody.setAttribute('height', '1');
           dominoBody.setAttribute('depth', '0.2');
           dominoBody.setAttribute('color', '#FFF');
 
+          // Face texturée du domino
           let dominoFace = document.createElement('a-plane');
           dominoFace.setAttribute('position', '0 0 0.105');
           dominoFace.setAttribute('width', '1');
           dominoFace.setAttribute('height', '1');
           dominoFace.setAttribute('material', `src: #${textureId}`);
 
-          // Gestion du survol
-          dominoContainer.addEventListener('mouseenter', function() {
-            if (selectedDomino !== dominoContainer) { // Change en bleu seulement si pas sélectionné
-              dominoInHover = dominoContainer;
-              dominoBody.setAttribute('material', 'color', 'blue');
-            }
-          });
-          dominoContainer.addEventListener('mouseleave', function() {
-            if (dominoInHover === dominoContainer) {
-              dominoInHover = null; // Réinitialise le domino en survol
-              if (selectedDomino !== dominoContainer) { // Réinitialise à blanc si pas sélectionné
-                dominoBody.setAttribute('material', 'color', '#FFF');
-              }
-            }
-          });
+          // Ajout du domino à la scène
+          dominoContainer.appendChild(dominoBody);
+          dominoContainer.appendChild(dominoFace);
 
-    // Gestion de la sélection
-    dominoContainer.addEventListener('click', function() {
-      if (selectedDomino === dominoContainer) {
-        // Désélectionne si déjà sélectionné
-        dominoBody.setAttribute('material', 'color', (dominoInHover === dominoContainer) ? 'blue' : '#FFF');
-        selectedDomino = null;
-      } else {
-        if (selectedDomino) {
-          // Réinitialise l'ancien domino sélectionné
-          selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
-        }
-        // Sélectionne le nouveau domino
-        selectedDomino = dominoContainer;
-        dominoBody.setAttribute('material', 'color', 'yellow');
+          document.querySelector('a-scene').appendChild(dominoContainer);
       }
-    });
-
-    dominoContainer.appendChild(dominoBody);
-    dominoContainer.appendChild(dominoFace);
-    document.querySelector('a-scene').appendChild(dominoContainer);
-  }
-
-
 
       document.addEventListener('DOMContentLoaded', function() {
         // Liste des identifiants de dominos
@@ -224,14 +138,6 @@
             createDomino(`${position.x} 0.5 ${position.z}`, position.rotation, mixedDominoes[index]);
           }
         });
-
-        // Ajout de l'écouteur d'événements pour la sélection
-        document.querySelector('a-scene').addEventListener('triggerup', function(event) {
-          if (event.target && event.target.classList.contains('domino')) {
-            // Changement de la couleur du domino sélectionné
-            event.target.setAttribute('material', 'color', 'yellow');
-          }
-        });
       });
 
       // Fonction pour mélanger un tableau
@@ -246,5 +152,30 @@
 
 
       </script>
+
+<script>
+  const highlightMaterial = new THREE.MeshBasicMaterial({ emissive: 0xffff00 });
+  const originalMaterials = [...document.querySelectorAll('*')].map((el) => el.object3D.children[0].material);
+  
+  document.querySelector('#rightHand').addEventListener('selectmodel', (event) => {
+    event.detail.el.object3D.traverse((child) => {
+      if (child.isMesh) {
+        child.material = highlightMaterial;
+        event.target.classList.add("selected");
+      }
+    });
+  });
+
+  document.querySelector('#rightHand').addEventListener('deselectmodel', () => {
+    document.querySelectorAll(".selected").forEach((element) => {
+      element.object3D.traverse((child) => {
+        if (child.isMesh && child.material === highlightMaterial) {
+          child.material = originalMaterials[originalMaterials.indexOf(child.material)];
+        }
+      });
+      element.classList.remove("selected");
+    });
+  });
+</script>
   </a-scene>
 </body>
