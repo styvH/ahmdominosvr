@@ -81,44 +81,21 @@
 
             const camera = document.querySelector('a-camera');
 
-// Fonction pour déplacer la caméra
-function moveCamera(direction) {
-  let position = camera.getAttribute('position');
-  switch (direction) {
-    case 'forward':
-      position.z -= 1;
-      break;
-    case 'backward':
-      position.z += 1;
-      break;
-    case 'left':
-      position.x -= 1;
-      break;
-    case 'right':
-      position.x += 1;
-      break;
-  }
-  camera.setAttribute('position', position);
-}
+            // Fonction pour déplacer la caméra selon le joystick
+            function moveCamera(x, y) {
+              let position = camera.getAttribute('position');
+              position.x += x;
+              position.z += y; // Inverser si nécessaire selon l'orientation de votre scène
+              camera.setAttribute('position', position);
+            }
 
-// Écouteur pour le contrôleur gauche (boutons X et Y)
-document.querySelector('[oculus-touch-controls="hand: left"]').addEventListener('buttondown', (event) => {
-  if (event.detail.id === 3) { // Bouton X
-    moveCamera('left');
-  } else if (event.detail.id === 4) { // Bouton Y
-    moveCamera('backward');
-  }
-});
-
-// Écouteur pour le contrôleur droit (boutons A et B)
-document.querySelector('[oculus-touch-controls="hand: right"]').addEventListener('buttondown', (event) => {
-  if (event.detail.id === 0) { // Bouton A
-    moveCamera('right');
-  } else if (event.detail.id === 1) { // Bouton B
-    moveCamera('forward');
-  }
-});
-
+            // Écouteur pour le mouvement du joystick du contrôleur droit
+            document.querySelector('[oculus-touch-controls="hand: right"]').addEventListener('axismove', (event) => {
+              console.log('Joystick droit bougé : ', event.detail.id);
+              const x = event.detail.axis[2]; // Valeur d'axe horizontal du joystick
+              const y = event.detail.axis[3]; // Valeur d'axe vertical du joystick
+              moveCamera(x * 0.1, y * -0.1); // Ajustez le facteur de multiplication pour contrôler la vitesse
+            });
           });
 
 
