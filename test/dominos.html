@@ -42,7 +42,8 @@
       <a-sky color="#ECECEC"></a-sky>
       <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
-      <a-plane id="floor" position="0 0 0" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+      <a-box id="table" position="0 0.5 0" rotation="0 0 0" width="10" height="1" depth="10" color="#7BC8A4"></a-box>
+
 
       <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
 
@@ -91,8 +92,8 @@
         let selectedDomino = null; // Référence au domino actuellement sélectionné
 
           // Écouter les clics sur le sol
-          const floor = document.getElementById('floor');
-          floor.addEventListener('click', function(event) {
+          const table = document.getElementById('table');
+          table.addEventListener('click', function(event) {
             // Vérifier si un domino est sélectionné
             if (selectedDomino) {
               // Récupérer les coordonnées du clic sur le sol
