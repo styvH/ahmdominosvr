@@ -73,21 +73,45 @@
           document.querySelector('a-scene').appendChild(dominoContainer);
       }
 
-        // Définition des positions des dominos
+      document.addEventListener('DOMContentLoaded', function() {
+        // Liste des identifiants de dominos
+        let dominoes = Array.from({length: 28}, (_, i) => `D${i + 1}`);
+        let mixedDominoes = shuffleArray(dominoes); // Mélange des dominos
+
+        // Définition des positions
+        let positions = [];
         let distanceX = 7;
         let distanceZ = 7;
         let spacing = 1.1;
-
-        // Création des dominos
         for (let i = 0; i < 7; i++) {
-            let positionZRightLeft = i * spacing - 3 * spacing;
-            let positionXFrontBack = i * spacing - 3 * spacing;
+          let positionZRightLeft = i * spacing - 3 * spacing;
+          let positionXFrontBack = i * spacing - 3 * spacing;
 
-            createDomino(`${distanceX} 0.5 ${positionZRightLeft}`, '0 90 0', `D${i+1}`);
-            createDomino(`${-distanceX} 0.5 ${positionZRightLeft}`, '0 -90 0', `D${i+8}`);
-            createDomino(`${positionXFrontBack} 0.5 ${distanceZ}`, '0 0 0', `D${i+15}`);
-            createDomino(`${positionXFrontBack} 0.5 ${-distanceZ}`, '0 180 0', `D${i+22}`);
+          positions.push({ x: distanceX, z: positionZRightLeft, rotation: '0 90 0' });
+          positions.push({ x: -distanceX, z: positionZRightLeft, rotation: '0 -90 0' });
+          positions.push({ x: positionXFrontBack, z: distanceZ, rotation: '0 0 0' });
+          positions.push({ x: positionXFrontBack, z: -distanceZ, rotation: '0 180 0' });
         }
+
+        // Attribuer aléatoirement les dominos aux positions prédéfinies
+        positions.forEach((position, index) => {
+          if (index < mixedDominoes.length) { // Vérification pour éviter les erreurs d'index
+            createDomino(`${position.x} 0.5 ${position.z}`, position.rotation, mixedDominoes[index]);
+          }
+        });
+      });
+
+      // Fonction pour mélanger un tableau
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]]; // Échange
+        }
+        return array;
+      }
+            
+
+
       </script>
   </a-scene>
 </body>
