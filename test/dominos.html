@@ -86,9 +86,9 @@
 
       <script>
 
+        let dominoInHover = null; // Référence au domino actuellement en survol
+        let selectedDomino = null; // Référence au domino actuellement sélectionné
 
-
-        let selectedDomino = null;
 
           // Fonction pour gérer la sélection des dominos
         function handleDominoSelection(event) {
@@ -104,7 +104,7 @@
               intersectedElement.firstChild.setAttribute('material', 'color', '#FFF');
               selectedDomino = null;
             } else {
-              intersectedElement.firstChild.setAttribute('material', 'color', 'yellow');
+              intersectedElement.firstChild.setAttribute('material', 'color', 'blue');
               selectedDomino = intersectedElement;
             }
           }
@@ -113,59 +113,64 @@
         [leftHand, rightHand].forEach(controller => {
           controller.addEventListener('triggerdown', handleDominoSelection);
         });
-        // Création des dominos
+
+        // Mise à jour de la fonction de création de domino pour gérer le survol et la sélection
         function createDomino(position, rotation, textureId) {
-          // Création de l'entité domino
           let dominoContainer = document.createElement('a-entity');
           dominoContainer.setAttribute('position', position);
           dominoContainer.setAttribute('rotation', rotation);
-          dominoContainer.setAttribute('class', 'domino'); 
+          dominoContainer.setAttribute('class', 'domino');
 
-          // Corps du domino
           let dominoBody = document.createElement('a-box');
           dominoBody.setAttribute('width', '1');
           dominoBody.setAttribute('height', '1');
           dominoBody.setAttribute('depth', '0.2');
           dominoBody.setAttribute('color', '#FFF');
 
-          // Face texturée du domino
           let dominoFace = document.createElement('a-plane');
           dominoFace.setAttribute('position', '0 0 0.105');
           dominoFace.setAttribute('width', '1');
           dominoFace.setAttribute('height', '1');
           dominoFace.setAttribute('material', `src: #${textureId}`);
 
-          // Ajout des écouteurs pour le changement de couleur au survol
+          // Gestion du survol
           dominoContainer.addEventListener('mouseenter', function() {
-            dominoBody.setAttribute('material', 'color', 'blue');
+            if (selectedDomino !== dominoContainer) { // Change en bleu seulement si pas sélectionné
+              dominoInHover = dominoContainer;
+              dominoBody.setAttribute('material', 'color', 'blue');
+            }
           });
           dominoContainer.addEventListener('mouseleave', function() {
-            dominoBody.setAttribute('material', 'color', '#FFF');
-          });
-
-          dominoContainer.addEventListener('click', function() {
-            if (selectedDomino && selectedDomino !== dominoContainer) {
-              // Réinitialise la couleur de l'ancien domino sélectionné
-              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
-            }
-            // Si le domino cliqué est déjà sélectionné, le désélectionner
-            if (selectedDomino === dominoContainer) {
-              dominoContainer.firstChild.setAttribute('material', 'color', '#FFF');
-              selectedDomino = null; // Désélectionner le domino
-            } else {
-              // Sinon, sélectionner le nouveau domino et le mettre en bleu
-              dominoContainer.firstChild.setAttribute('material', 'color', 'blue');
-              selectedDomino = dominoContainer; // Mettre à jour le domino sélectionné
+            if (dominoInHover === dominoContainer) {
+              dominoInHover = null; // Réinitialise le domino en survol
+              if (selectedDomino !== dominoContainer) { // Réinitialise à blanc si pas sélectionné
+                dominoBody.setAttribute('material', 'color', '#FFF');
+              }
             }
           });
-    
 
-          // Ajout du domino à la scène
-          dominoContainer.appendChild(dominoBody);
-          dominoContainer.appendChild(dominoFace);
-
-          document.querySelector('a-scene').appendChild(dominoContainer);
+    // Gestion de la sélection
+    dominoContainer.addEventListener('click', function() {
+      if (selectedDomino === dominoContainer) {
+        // Désélectionne si déjà sélectionné
+        dominoBody.setAttribute('material', 'color', (dominoInHover === dominoContainer) ? 'blue' : '#FFF');
+        selectedDomino = null;
+      } else {
+        if (selectedDomino) {
+          // Réinitialise l'ancien domino sélectionné
+          selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
         }
+        // Sélectionne le nouveau domino
+        selectedDomino = dominoContainer;
+        dominoBody.setAttribute('material', 'color', 'yellow');
+      }
+    });
+
+    dominoContainer.appendChild(dominoBody);
+    dominoContainer.appendChild(dominoFace);
+    document.querySelector('a-scene').appendChild(dominoContainer);
+  }
+
 
 
       document.addEventListener('DOMContentLoaded', function() {
