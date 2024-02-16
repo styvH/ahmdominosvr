@@ -42,7 +42,7 @@
       <a-sky color="#ECECEC"></a-sky>
       <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
-      <a-box id="table" position="0 0.5 0" rotation="0 0 0" width="10" height="1" depth="10" color="#7BC8A4"></a-box>
+      <a-box id="table" position="0 0.5 0" rotation="0 0 0" width="10" height="0.5" depth="10" color="#7BC8A4"></a-box>
 
 
       <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
@@ -94,18 +94,24 @@
           // Écouter les clics sur le sol
           const table = document.getElementById('table');
           table.addEventListener('click', function(event) {
-            // Vérifier si un domino est sélectionné
             if (selectedDomino) {
-              // Récupérer les coordonnées du clic sur le sol
+              // Calculer la nouvelle position sur la table
               const clickPosition = event.detail.intersection.point;
-              
-              // Mettre à jour la position du domino sélectionné
-              // Vous pouvez ajuster la position en y pour que le domino ne soit pas enfoncé dans le sol
-              selectedDomino.setAttribute('position', `${clickPosition.x} 1 ${clickPosition.z}`);
-              
-              // Optionnellement, désélectionner le domino après le déplacement
-              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF'); // Réinitialiser la couleur
-              selectedDomino = null; // Réinitialiser la sélection
+              const newPosition = `${clickPosition.x} 1 ${clickPosition.z}`; // Ajuster la hauteur si nécessaire
+
+              // Mettre à jour la position du domino
+              selectedDomino.setAttribute('position', newPosition);
+
+              // Mettre le domino en position couchée et le rendre plus petit
+              selectedDomino.setAttribute('rotation', '90 0 0'); // Rotation pour le coucher
+              selectedDomino.setAttribute('scale', '0.5 0.5 0.5'); // Réduire la taille
+
+              // Marquer le domino comme placé pour empêcher d'autres déplacements
+              selectedDomino.setAttribute('data-placed', 'true');
+
+              // Désélectionner le domino
+              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
+              selectedDomino = null;
             }
           });
 
