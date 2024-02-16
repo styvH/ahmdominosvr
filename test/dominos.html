@@ -8,7 +8,7 @@
       <!-- Préchargement des textures -->
       <a-assets>
         <!-- Textures uniques pour chaque domino -->
-        <img id="D1" name="0-0" src="img/domino-00.png" crossorigin="anonymous">
+        <img id="D1" name="0-0" src="../img/domino-00.png" crossorigin="anonymous">
         <img id="D2" name="0-1" src="https://cdn.pixabay.com/photo/2012/04/14/15/57/domino-34381_1280.png" crossorigin="anonymous">
         <img id="D3" name="0-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34382_1280.png" crossorigin="anonymous">
         <img id="D4" name="0-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34383_1280.png" crossorigin="anonymous">
@@ -165,34 +165,24 @@
    
                 <script>
                   document.addEventListener('DOMContentLoaded', function() {
+
+                    
                     // Variable pour suivre le domino actuellement saisi
                     let grabbedDomino = null;
-        
-                    // Écoute pour le bouton de gâchette pressé sur les contrôleurs
-                    document.querySelectorAll('[laser-controls]').forEach(controller => {
-                      controller.addEventListener('triggerdown', function(evt) {
-                        // Si aucun domino n'est saisi, vérifier si le rayon pointe sur un domino
-                        if (!grabbedDomino) {
-                          const hit = evt.detail.intersectedEl;
-                          if (hit && hit.classList.contains('clickable')) {
-                            grabbedDomino = hit;
-                            grabbedDomino.setAttribute('position', {
-                              x: evt.detail.intersection.point.x,
-                              y: evt.detail.intersection.point.y,
-                              z: evt.detail.intersection.point.z
-                            });
-                            // Attacher le domino au contrôleur pour qu'il suive ses mouvements
-                            grabbedDomino.setAttribute('dynamic-body', 'mass: 0'); // Assurez-vous d'avoir une physique activée si nécessaire
-                            controller.appendChild(grabbedDomino);
-                          }
-                        } else {
-                          // Si un domino est déjà saisi, le relâcher
-                          controller.removeChild(grabbedDomino);
-                          grabbedDomino.removeAttribute('dynamic-body');
-                          grabbedDomino = null;
-                        }
-                      });
+
+                    controller.addEventListener('triggerdown', function(evt) {
+                      const hit = evt.detail.intersectedEl;
+                      if (!grabbedDomino && hit && hit.classList.contains('clickable')) {
+                        grabbedDomino = hit;
+                        // Attacher le domino au contrôleur
+                        evt.currentTarget.appendChild(grabbedDomino);
+                      } else if (grabbedDomino) {
+                        // Détacher le domino du contrôleur
+                        evt.currentTarget.removeChild(grabbedDomino);
+                        grabbedDomino = null;
+                      }
                     });
+
                   });
                 </script>
   </a-scene>
