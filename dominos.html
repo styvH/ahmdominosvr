@@ -37,14 +37,47 @@
         <img id="D27" name="5-6" src="https://cdn.pixabay.com/photo/2012/05/07/11/07/domino-48089_1280.png" crossorigin="anonymous">
         <img id="D28" name="6-6" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34407_1280.png" crossorigin="anonymous">
     </a-assets>
-      <!-- Positionnement de la caméra -->
-      <a-camera position="0 2.5 11" rotation="0 0 0"></a-camera>
 
       <!-- Environnement -->
       <a-sky color="#ECECEC"></a-sky>
       <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
+
+      <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
+
+      <!-- Positionnement de la caméra -->
+      <a-entity id="player">
+        <a-camera></a-camera>
+      </a-entity>
       <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const cameraPositions = [
+              { position: "-11 2.5 0", rotation: "0 90 0" }, // Rotate towards center from right
+              { position: "11 2.5 0", rotation: "0 -90 0" }, // Rotate towards center from left
+              { position: "0 2.5 -11", rotation: "0 180 0" }, // Rotate towards center from back
+              { position: "0 2.5 11", rotation: "0 0 0" } // Default front view, no rotation needed
+            ];
+            let currentViewIndex = 0;
+
+            const changeViewButton = document.getElementById('changeCameraView');
+            changeViewButton.addEventListener('click', () => {
+              currentViewIndex = (currentViewIndex + 1) % cameraPositions.length;
+              const newView = cameraPositions[currentViewIndex];
+              const camera = document.querySelector('a-camera');
+              camera.setAttribute('position', newView.position);
+              camera.setAttribute('rotation', newView.rotation);
+            });
+
+            // Initialisation de la position du joueur avec la première position de caméra
+            const player = document.getElementById('player');
+            const initialView = cameraPositions[0]; // Vous pouvez choisir une autre position initiale si nécessaire
+            player.setAttribute('position', initialView.position);
+            player.setAttribute('rotation', initialView.rotation);
+          });
+
+
+
+
         // Création des dominos
         function createDomino(position, rotation, textureId) {
           // Création de l'entité domino
