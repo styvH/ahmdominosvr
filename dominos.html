@@ -44,13 +44,13 @@
 
 
       <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
-
+      <a-camera></a-camera>
       <!-- Positionnement de la caméra -->
       <a-entity id="player">
-        <a-entity oculus-touch-controls="hand: left"></a-entity>
-        <a-entity oculus-touch-controls="hand: right"></a-entity>
-        <a-camera></a-camera>
+
       </a-entity>
+      <a-entity oculus-touch-controls="hand: left"></a-entity>
+      <a-entity oculus-touch-controls="hand: right"></a-entity>
       <script>
 
           document.addEventListener('DOMContentLoaded', () => {
