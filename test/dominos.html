@@ -170,7 +170,7 @@
                     // Variable pour suivre le domino actuellement saisi
                     let grabbedDomino = null;
 
-                    controller.addEventListener('triggerdown', function(evt) {
+                    controller.addEventListener('triggerup', function(evt) {
                       const hit = evt.detail.intersectedEl;
                       if (!grabbedDomino && hit && hit.classList.contains('clickable')) {
                         grabbedDomino = hit;

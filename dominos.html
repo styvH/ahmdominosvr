@@ -51,7 +51,7 @@
         <a-entity id="player" position="0 2.5 11">
           <a-entity camera look-controls wasd-controls position="0 0 0"></a-entity>
           <a-entity oculus-touch-controls="hand: left" id="leftHand"></a-entity>
-          <a-entity oculus-touch-controls="hand: right" id="rightHand"></a-entity>
+          <a-entity laser-controls="hand: right" id="rightHand"></a-entity>
         </a-entity>
 
         <script>
@@ -93,6 +93,8 @@
         function createDomino(position, rotation, textureId) {
           // Création de l'entité domino
           let dominoContainer = document.createElement('a-entity');
+          dominoContainer.className = 'domino';
+
           dominoContainer.setAttribute('position', position);
           dominoContainer.setAttribute('rotation', rotation);
 
@@ -157,5 +159,37 @@
 
 
       </script>
+
+<script>
+  AFRAME.registerComponent('domino-mover', {
+    init: function () {
+      this.grabbed = false; // État initial : aucun domino n'est saisi
+      this.domino = null; // Le domino actuellement saisi
+
+      // Écoute pour la pression de la gâchette
+      this.el.addEventListener('triggerdown', (evt) => {
+        if (!this.grabbed) {
+          // Raycaster pour trouver le domino ciblé
+          let intersected = this.el.components['raycaster'].getIntersection(this.el);
+          if (intersected && intersected.object.el.className === 'domino') {
+            this.grabbed = true;
+            this.domino = intersected.object.el;
+            this.domino.setAttribute('position', this.el.getAttribute('position'));
+          }
+        } else {
+          // Relâcher le domino
+          this.grabbed = false;
+          this.domino = null;
+        }
+      });
+    }
+  });
+
+  // Ajouter le composant à chaque contrôleur
+  document.querySelectorAll('[laser-controls]').forEach(ctrl => {
+    ctrl.setAttribute('domino-mover', '');
+  });
+</script>
+
   </a-scene>
 </body>
