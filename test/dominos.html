@@ -1,129 +1,204 @@
 <head>
-    <meta charset="utf-8">
-    <title>KISA DOMINO</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-extras/dist/aframe-extras.min.js"></script>
+  <meta charset="utf-8">
+  <title>KISA DOMINO</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
 <body>
-    <a-scene obb-collider="showColliders: false">
-        <!-- Préchargement des textures -->
-        <a-assets>
-            <!-- Textures uniques pour chaque domino -->
-            <img id="D1" name="0-0" src="../img/domino-00.png">
-            <img id="D2" name="0-1" src="../img/domino-01.png">
-            <img id="D3" name="0-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34382_1280.png" crossorigin="anonymous">
-            <img id="D4" name="0-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34383_1280.png" crossorigin="anonymous">
-            <img id="D5" name="0-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34384_1280.png" crossorigin="anonymous">
-            <img id="D6" name="0-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34385_1280.png" crossorigin="anonymous">
-            <img id="D7" name="0-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34386_1280.png" crossorigin="anonymous">
-            
-            <img id="D8" name="1-1" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34387_1280.png" crossorigin="anonymous">          
-            <img id="D9" name="1-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34388_1280.png" crossorigin="anonymous">
-            <img id="D10" name="1-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/dominoes-34389_1280.png" crossorigin="anonymous">
-            <img id="D11" name="1-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34390_1280.png" crossorigin="anonymous">
-            <img id="D12" name="1-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34391_1280.png" crossorigin="anonymous">
-            <img id="D13" name="1-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34392_1280.png" crossorigin="anonymous">
-            
-            
-            <img id="D14" name="2-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34393_1280.png" crossorigin="anonymous">
-            <img id="D15" name="2-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34394_1280.png" crossorigin="anonymous">
-            <img id="D16" name="2-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34395_1280.png" crossorigin="anonymous">
-            <img id="D17" name="2-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34396_1280.png" crossorigin="anonymous">     
-            <img id="D18" name="2-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34397_1280.png" crossorigin="anonymous">
-           
-            <img id="D19" name="3-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34398_1280.png" crossorigin="anonymous">
-            <img id="D20" name="3-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34399_1280.png" crossorigin="anonymous">
-            <img id="D21" name="3-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34400_1280.png" crossorigin="anonymous">
-            <img id="D22" name="3-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34401_1280.png" crossorigin="anonymous">
-            
-            <img id="D23" name="4-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34402_1280.png" crossorigin="anonymous">
-            <img id="D24" name="4-5" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34403_1280.png" crossorigin="anonymous">
-            <img id="D25" name="4-6" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34404_1280.png" crossorigin="anonymous">
-            
-            <img id="D26" name="5-5" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/dominoes-34405_1280.png" crossorigin="anonymous">
-            <img id="D27" name="5-6" src="https://cdn.pixabay.com/photo/2012/05/07/11/07/domino-48089_1280.png" crossorigin="anonymous">
+  <a-scene>
+      <!-- Préchargement des textures -->
+      <a-assets>
+        <!-- Textures uniques pour chaque domino -->
+        <img id="D1" name="0-0" src="img/domino-00.png" crossorigin="anonymous">
+        <img id="D2" name="0-1" src="https://cdn.pixabay.com/photo/2012/04/14/15/57/domino-34381_1280.png" crossorigin="anonymous">
+        <img id="D3" name="0-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34382_1280.png" crossorigin="anonymous">
+        <img id="D4" name="0-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34383_1280.png" crossorigin="anonymous">
+        <img id="D5" name="0-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34384_1280.png" crossorigin="anonymous">
+        <img id="D6" name="0-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34385_1280.png" crossorigin="anonymous">
+        <img id="D7" name="0-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34386_1280.png" crossorigin="anonymous">
+        <img id="D8" name="1-1" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34387_1280.png" crossorigin="anonymous">          
+        <img id="D9" name="1-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34388_1280.png" crossorigin="anonymous">
+        <img id="D10" name="1-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/dominoes-34389_1280.png" crossorigin="anonymous">
+        <img id="D11" name="1-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34390_1280.png" crossorigin="anonymous">
+        <img id="D12" name="1-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34391_1280.png" crossorigin="anonymous">
+        <img id="D13" name="1-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/58/domino-34392_1280.png" crossorigin="anonymous"> 
+        <img id="D14" name="2-2" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34393_1280.png" crossorigin="anonymous">
+        <img id="D15" name="2-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34394_1280.png" crossorigin="anonymous">
+        <img id="D16" name="2-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34395_1280.png" crossorigin="anonymous">
+        <img id="D17" name="2-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34396_1280.png" crossorigin="anonymous">     
+        <img id="D18" name="2-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34397_1280.png" crossorigin="anonymous">      
+        <img id="D19" name="3-3" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34398_1280.png" crossorigin="anonymous">
+        <img id="D20" name="3-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34399_1280.png" crossorigin="anonymous">
+        <img id="D21" name="3-5" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34400_1280.png" crossorigin="anonymous">
+        <img id="D22" name="3-6" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34401_1280.png" crossorigin="anonymous">       
+        <img id="D23" name="4-4" src="https://cdn.pixabay.com/photo/2012/04/14/15/59/domino-34402_1280.png" crossorigin="anonymous">
+        <img id="D24" name="4-5" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34403_1280.png" crossorigin="anonymous">
+        <img id="D25" name="4-6" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34404_1280.png" crossorigin="anonymous">     
+        <img id="D26" name="5-5" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/dominoes-34405_1280.png" crossorigin="anonymous">
+        <img id="D27" name="5-6" src="https://cdn.pixabay.com/photo/2012/05/07/11/07/domino-48089_1280.png" crossorigin="anonymous">
+        <img id="D28" name="6-6" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34407_1280.png" crossorigin="anonymous">
+    </a-assets>
 
-            <img id="D28" name="6-6" src="https://cdn.pixabay.com/photo/2012/04/14/16/00/domino-34407_1280.png" crossorigin="anonymous">
-        </a-assets>
+      <!-- Environnement -->
+      <a-sky color="#ECECEC"></a-sky>
+      <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
-        <!-- Caméra positionnée pour être face aux dominos de devant -->
-        <a-camera position="0 2.5 11" rotation="0 0 0"></a-camera>
-        <a-entity id="leftHand" hand-tracking-controls="hand: left;"></a-entity>
-        <a-entity id="rightHand" hand-tracking-controls="hand: right;"></a-entity>
-        <a-entity id="leftHand" hand-tracking-grab-controls="hand: left;"></a-entity>
-        <a-entity id="rightHand" hand-tracking-grab-controls="hand: right;"></a-entity>
-       
-        <a-entity oculus-touch-controls="hand: left" thumbstick-logging></a-entity>
-        <a-entity oculus-touch-controls="hand: right" thumbstick-logging></a-entity>
 
-        <!-- Ciel pour contexte -->
-        <a-sky color="#ECECEC"></a-sky>
+      <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
 
-        <!-- Table pour contexte -->
-        <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
+      
+
+      <!-- Positionnement du joueur -->
+        <a-entity id="player" position="0 2.5 11">
+          <a-entity camera look-controls wasd-controls position="0 0 0"></a-entity>
+          <a-entity oculus-touch-controls="hand: left" id="leftHand"></a-entity>
+          <a-entity oculus-touch-controls="hand: right" id="rightHand"></a-entity>
+        </a-entity>
+
+
 
         <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const player = document.getElementById('player');
+            const leftHand = document.getElementById('leftHand');
+            const rightHand = document.getElementById('rightHand');
+            let currentPositionIndex = 0; // Commence avec la position initiale
 
-          AFRAME.registerComponent('thumbstick-logging',{
-            init: function () {
-              this.el.addEventListener('thumbstickmoved', this.logThumbstick);
-            },
-            logThumbstick: function (evt) {
-              if (evt.detail.y > 0.95) { console.log("DOWN"); }
-              if (evt.detail.y < -0.95) { console.log("UP"); }
-              if (evt.detail.x < -0.95) { console.log("LEFT"); }
-              if (evt.detail.x > 0.95) { console.log("RIGHT"); }
+            // Écoute pour le bouton X pressé sur les deux contrôleurs
+            const buttons = ['xbuttondown', 'abuttondown'];
+            buttons.forEach(button => {
+              leftHand.addEventListener(button, changePosition);
+              rightHand.addEventListener(button, changePosition);
+            });
+
+            function changePosition() {
+              currentPositionIndex = (currentPositionIndex + 1) % playerPositions.length; // passe à la position suivante
+              const newPos = playerPositions[currentPositionIndex];
+              player.setAttribute('position', newPos.position); // change la position
+              player.setAttribute('rotation', newPos.rotation); // change la rotation
             }
+
+            const playerPositions = [
+              { position: "-11 2.5 0", rotation: "0 -90 0" }, // Rotate towards center from right
+              { position: "11 2.5 0", rotation: "0 90 0" }, // Rotate towards center from left
+              { position: "0 2.5 -11", rotation: "0 180 0" }, // Rotate towards center from back
+              { position: "0 2.5 11", rotation: "0 0 0" } // Default front view, no rotation needed
+            ];
           });
-          // Fonction pour créer un domino avec espacement et texture spécifique
-          function createDomino(position, rotation, textureId) {
-            // Conteneur pour le domino
-            let dominoContainer = document.createElement('a-entity');
-            dominoContainer.setAttribute('position', position);
-            dominoContainer.setAttribute('rotation', rotation);
+        </script>
 
-            // Corps du domino
-            let dominoBody = document.createElement('a-box');
-            dominoBody.setAttribute('width', '1');
-            dominoBody.setAttribute('height', '1');
-            dominoBody.setAttribute('depth', '0.2');
-            dominoBody.setAttribute('color', '#FFF'); // Couleur de fond du domino
+      <script>
 
-            // Face avec texture
-            let dominoFace = document.createElement('a-plane');
-            dominoFace.setAttribute('position', '0 0 0.105'); // Ajuster pour éviter le z-fighting
-            dominoFace.setAttribute('width', '1');
-            dominoFace.setAttribute('height', '1');
-            dominoFace.setAttribute('material', `src: #${textureId}`);
 
-            // Ajout du corps et de la face au conteneur
-            dominoContainer.appendChild(dominoBody);
-            dominoContainer.appendChild(dominoFace);
 
-            // Ajout du conteneur à la scène
-            document.querySelector('a-scene').appendChild(dominoContainer);
+
+        // Création des dominos
+        function createDomino(position, rotation, textureId) {
+          // Création de l'entité domino
+          let dominoContainer = document.createElement('a-entity');
+          dominoContainer.setAttribute('position', position);
+          dominoContainer.setAttribute('rotation', rotation);
+
+          // Corps du domino
+          let dominoBody = document.createElement('a-box');
+          dominoBody.setAttribute('width', '1');
+          dominoBody.setAttribute('height', '1');
+          dominoBody.setAttribute('depth', '0.2');
+          dominoBody.setAttribute('color', '#FFF');
+
+          // Face texturée du domino
+          let dominoFace = document.createElement('a-plane');
+          dominoFace.setAttribute('position', '0 0 0.105');
+          dominoFace.setAttribute('width', '1');
+          dominoFace.setAttribute('height', '1');
+          dominoFace.setAttribute('material', `src: #${textureId}`);
+
+          // Ajout du domino à la scène
+          dominoContainer.appendChild(dominoBody);
+          dominoContainer.appendChild(dominoFace);
+
+          // Ajout de la classe clickable
+          dominoContainer.classList.add('clickable');
+
+          document.querySelector('a-scene').appendChild(dominoContainer);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Liste des identifiants de dominos
+        let dominoes = Array.from({length: 28}, (_, i) => `D${i + 1}`);
+        let mixedDominoes = shuffleArray(dominoes); // Mélange des dominos
+
+        // Définition des positions
+        let positions = [];
+        let distanceX = 7;
+        let distanceZ = 7;
+        let spacing = 1.1;
+        for (let i = 0; i < 7; i++) {
+          let positionZRightLeft = i * spacing - 3 * spacing;
+          let positionXFrontBack = i * spacing - 3 * spacing;
+
+          positions.push({ x: distanceX, z: positionZRightLeft, rotation: '0 90 0' });
+          positions.push({ x: -distanceX, z: positionZRightLeft, rotation: '0 -90 0' });
+          positions.push({ x: positionXFrontBack, z: distanceZ, rotation: '0 0 0' });
+          positions.push({ x: positionXFrontBack, z: -distanceZ, rotation: '0 180 0' });
         }
 
-          // Positions ajustées pour les dominos
-          let distanceX = 7; // Pour les dominos à droite et à gauche
-          let distanceZ = 7; // Pour les dominos devant et derrière
-          let spacing = 1.1; // Largeur du domino (1m) + espace de 10cm
-
-          // Génération des dominos avec des textures uniques et orientation correcte
-          for (let i = 0; i < 7; i++) {
-              let positionZRightLeft = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-              let positionXFrontBack = i * spacing - 3 * spacing; // Ajustement pour l'espacement
-
-              // Dominos à droite (doivent être orientés de 90 degrés pour faire face au centre)
-              createDomino(`${distanceX} 0.5 ${positionZRightLeft}`, '0 90 0', `D${i+1}`);
-              // Dominos à gauche (doivent être orientés de -90 degrés pour faire face au centre)
-              createDomino(`${-distanceX} 0.5 ${positionZRightLeft}`, '0 -90 0', `D${i+8}`);
-              
-              // Dominos devant (doivent être orientés de 0 degré pour faire face au centre)
-              createDomino(`${positionXFrontBack} 0.5 ${distanceZ}`, '0 0 0', `D${i+15}`);
-              // Dominos derrière (doivent être orientés de 180 degrés pour faire face au centre)
-              createDomino(`${positionXFrontBack} 0.5 ${-distanceZ}`, '0 180 0', `D${i+22}`);
+        // Attribuer aléatoirement les dominos aux positions prédéfinies
+        positions.forEach((position, index) => {
+          if (index < mixedDominoes.length) { // Vérification pour éviter les erreurs d'index
+            createDomino(`${position.x} 0.5 ${position.z}`, position.rotation, mixedDominoes[index]);
           }
-        </script>
-    </a-scene>
+        });
+      });
+
+      // Fonction pour mélanger un tableau
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]]; // Échange
+        }
+        return array;
+      }
+            
+
+
+      </script>
+
+      
+                <!-- Contrôleurs laser -->
+                <a-entity laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
+                <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
+        
+                <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                    // Variable pour suivre le domino actuellement saisi
+                    let grabbedDomino = null;
+        
+                    // Écoute pour le bouton de gâchette pressé sur les contrôleurs
+                    document.querySelectorAll('[laser-controls]').forEach(controller => {
+                      controller.addEventListener('triggerdown', function(evt) {
+                        // Si aucun domino n'est saisi, vérifier si le rayon pointe sur un domino
+                        if (!grabbedDomino) {
+                          const hit = evt.detail.intersectedEl;
+                          if (hit && hit.classList.contains('clickable')) {
+                            grabbedDomino = hit;
+                            grabbedDomino.setAttribute('position', {
+                              x: evt.detail.intersection.point.x,
+                              y: evt.detail.intersection.point.y,
+                              z: evt.detail.intersection.point.z
+                            });
+                            // Attacher le domino au contrôleur pour qu'il suive ses mouvements
+                            grabbedDomino.setAttribute('dynamic-body', 'mass: 0'); // Assurez-vous d'avoir une physique activée si nécessaire
+                            controller.appendChild(grabbedDomino);
+                          }
+                        } else {
+                          // Si un domino est déjà saisi, le relâcher
+                          controller.removeChild(grabbedDomino);
+                          grabbedDomino.removeAttribute('dynamic-body');
+                          grabbedDomino = null;
+                        }
+                      });
+                    });
+                  });
+                </script>
+  </a-scene>
 </body>
