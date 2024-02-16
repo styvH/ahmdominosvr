@@ -89,6 +89,30 @@
 
 
         let selectedDomino = null;
+
+          // Fonction pour gérer la sélection des dominos
+        function handleDominoSelection(event) {
+          // Vérifiez si le rayon intersecte un domino
+          const intersectedElement = event.detail.intersectedEl;
+          if (intersectedElement && intersectedElement.classList.contains('domino')) {
+            if (selectedDomino && selectedDomino !== intersectedElement) {
+              // Réinitialise la couleur de l'ancien domino sélectionné
+              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
+            }
+            // Toggle la sélection du domino
+            if (selectedDomino === intersectedElement) {
+              intersectedElement.firstChild.setAttribute('material', 'color', '#FFF');
+              selectedDomino = null;
+            } else {
+              intersectedElement.firstChild.setAttribute('material', 'color', 'blue');
+              selectedDomino = intersectedElement;
+            }
+          }
+        }
+
+        [leftHand, rightHand].forEach(controller => {
+          controller.addEventListener('triggerdown', handleDominoSelection);
+        });
         // Création des dominos
         function createDomino(position, rotation, textureId) {
           // Création de l'entité domino
