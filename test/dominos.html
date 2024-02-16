@@ -42,6 +42,7 @@
       <a-sky color="#ECECEC"></a-sky>
       <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#8B4513"></a-plane>
 
+      <a-plane id="floor" position="0 0 0" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
 
       <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
 
@@ -89,6 +90,23 @@
         let dominoInHover = null; // Référence au domino actuellement en survol
         let selectedDomino = null; // Référence au domino actuellement sélectionné
 
+          // Écouter les clics sur le sol
+          const floor = document.getElementById('floor');
+          floor.addEventListener('click', function(event) {
+            // Vérifier si un domino est sélectionné
+            if (selectedDomino) {
+              // Récupérer les coordonnées du clic sur le sol
+              const clickPosition = event.detail.intersection.point;
+              
+              // Mettre à jour la position du domino sélectionné
+              // Vous pouvez ajuster la position en y pour que le domino ne soit pas enfoncé dans le sol
+              selectedDomino.setAttribute('position', `${clickPosition.x} 1 ${clickPosition.z}`);
+              
+              // Optionnellement, désélectionner le domino après le déplacement
+              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF'); // Réinitialiser la couleur
+              selectedDomino = null; // Réinitialiser la sélection
+            }
+          });
 
           // Fonction pour gérer la sélection des dominos
         function handleDominoSelection(event) {
