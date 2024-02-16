@@ -45,10 +45,8 @@
 
       <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
       <!-- Positionnement de la caméra -->
-      <a-entity id="player">
-        <a-entity id="camera" camera look-controls position="0 2.5 11"></a-entity>
-      
-        <!-- Contrôleurs Oculus Touch -->
+      <a-entity id="player" position="0 2.5 11">
+        <a-entity camera look-controls wasd-controls position="0 0 0"></a-entity>
         <a-entity oculus-touch-controls="hand: left"></a-entity>
         <a-entity oculus-touch-controls="hand: right"></a-entity>
       </a-entity>
