@@ -47,10 +47,14 @@
 
       <!-- Positionnement de la caméra -->
       <a-entity id="player">
+        <a-entity oculus-touch-controls="hand: left"></a-entity>
+        <a-entity oculus-touch-controls="hand: right"></a-entity>
         <a-camera></a-camera>
       </a-entity>
       <script>
+
           document.addEventListener('DOMContentLoaded', () => {
+            
             const cameraPositions = [
               { position: "-11 2.5 0", rotation: "0 90 0" }, // Rotate towards center from right
               { position: "11 2.5 0", rotation: "0 -90 0" }, // Rotate towards center from left
@@ -73,6 +77,48 @@
             const initialView = cameraPositions[0]; // Vous pouvez choisir une autre position initiale si nécessaire
             player.setAttribute('position', initialView.position);
             player.setAttribute('rotation', initialView.rotation);
+
+
+            const camera = document.querySelector('a-camera');
+
+// Fonction pour déplacer la caméra
+function moveCamera(direction) {
+  let position = camera.getAttribute('position');
+  switch (direction) {
+    case 'forward':
+      position.z -= 1;
+      break;
+    case 'backward':
+      position.z += 1;
+      break;
+    case 'left':
+      position.x -= 1;
+      break;
+    case 'right':
+      position.x += 1;
+      break;
+  }
+  camera.setAttribute('position', position);
+}
+
+// Écouteur pour le contrôleur gauche (boutons X et Y)
+document.querySelector('[oculus-touch-controls="hand: left"]').addEventListener('buttondown', (event) => {
+  if (event.detail.id === 3) { // Bouton X
+    moveCamera('left');
+  } else if (event.detail.id === 4) { // Bouton Y
+    moveCamera('backward');
+  }
+});
+
+// Écouteur pour le contrôleur droit (boutons A et B)
+document.querySelector('[oculus-touch-controls="hand: right"]').addEventListener('buttondown', (event) => {
+  if (event.detail.id === 0) { // Bouton A
+    moveCamera('right');
+  } else if (event.detail.id === 1) { // Bouton B
+    moveCamera('forward');
+  }
+});
+
           });
 
 
