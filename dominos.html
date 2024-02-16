@@ -93,9 +93,9 @@
         function createDomino(position, rotation, textureId) {
           // Création de l'entité domino
           let dominoContainer = document.createElement('a-entity');
-          dominoContainer.setAttribute('class', 'domino');
           dominoContainer.setAttribute('position', position);
           dominoContainer.setAttribute('rotation', rotation);
+          dominoContainer.setAttribute('class', 'domino'); 
 
           // Corps du domino
           let dominoBody = document.createElement('a-box');
@@ -117,6 +117,7 @@
 
           document.querySelector('a-scene').appendChild(dominoContainer);
       }
+
 
       document.addEventListener('DOMContentLoaded', function() {
         // Liste des identifiants de dominos
@@ -144,6 +145,14 @@
             createDomino(`${position.x} 0.5 ${position.z}`, position.rotation, mixedDominoes[index]);
           }
         });
+
+        // Ajout de l'écouteur d'événements pour la sélection
+        document.querySelector('a-scene').addEventListener('click', function(event) {
+          if (event.target && event.target.classList.contains('domino')) {
+            // Changement de la couleur du domino sélectionné
+            event.target.setAttribute('material', 'color', 'yellow');
+          }
+        });
       });
 
       // Fonction pour mélanger un tableau
@@ -158,55 +167,5 @@
 
 
       </script>
-
-
-<script>
-  AFRAME.registerComponent('grab-domino', {
-    schema: {
-      color: {default: 'yellow'} // Couleur lors de la sélection
-    },
-    init: function () {
-      this.grabbed = false; // Si le domino est actuellement saisi
-      this.originalColor = null; // Pour stocker la couleur originale du domino
-
-      this.el.addEventListener('triggerdown', evt => {
-        if (!this.grabbed) {
-          // Détecter si un domino est touché par le rayon laser
-          const intersectedElement = this.el.components.raycaster.getIntersection(this.el);
-          if (intersectedElement && intersectedElement.object.el.classList.contains('domino')) {
-            this.grabbed = true; // Marquer le domino comme saisi
-            this.domino = intersectedElement.object.el;
-
-            // Sauvegarder la couleur originale et appliquer la nouvelle
-            this.originalColor = this.domino.getAttribute('material').color;
-            this.domino.setAttribute('material', 'color', this.data.color);
-
-            // Attacher le domino au contrôleur pour le déplacer
-            this.domino.setAttribute('position', this.el.getAttribute('position'));
-            this.el.appendChild(this.domino);
-          }
-        } else {
-          // Relâcher le domino à sa nouvelle position
-          if (this.domino) {
-            // Restaurer la couleur originale du domino
-            this.domino.setAttribute('material', 'color', this.originalColor);
-
-            // Détacher le domino du contrôleur
-            this.el.removeChild(this.domino);
-            this.domino = null;
-            this.grabbed = false;
-          }
-        }
-      });
-    }
-  });
-
-  // Attacher le composant 'grab-domino' aux contrôleurs
-  document.querySelectorAll('[laser-controls]').forEach(ctrl => {
-    ctrl.setAttribute('grab-domino', '');
-  });
-</script>
-
-
   </a-scene>
 </body>
