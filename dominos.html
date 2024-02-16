@@ -44,46 +44,47 @@
 
 
       <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
+
+      
+
       <!-- Positionnement de la caméra -->
-      <a-entity id="player" position="0 1 11">
-        <a-entity camera look-controls wasd-controls position="0 0 0"></a-entity>
-        <a-entity oculus-touch-controls="hand: left"></a-entity>
-        <a-entity oculus-touch-controls="hand: right"></a-entity>
-      </a-entity>
+<a-entity id="player" position="0 2.5 11">
+  <a-entity camera look-controls wasd-controls position="0 0 0"></a-entity>
+  <a-entity oculus-touch-controls="hand: left" id="leftHand"></a-entity>
+  <a-entity oculus-touch-controls="hand: right" id="rightHand"></a-entity>
+</a-entity>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const player = document.getElementById('player');
+    const leftHand = document.getElementById('leftHand');
+    const rightHand = document.getElementById('rightHand');
+    let currentPositionIndex = 0; // Commence avec la position initiale
+
+    // Écoute pour le bouton X pressé sur les deux contrôleurs
+    const buttons = ['xbuttondown', 'abuttondown'];
+    buttons.forEach(button => {
+      leftHand.addEventListener(button, changePosition);
+      rightHand.addEventListener(button, changePosition);
+    });
+
+    function changePosition() {
+      currentPositionIndex = (currentPositionIndex + 1) % playerPositions.length; // passe à la position suivante
+      const newPos = playerPositions[currentPositionIndex];
+      player.setAttribute('position', newPos.position); // change la position
+      player.setAttribute('rotation', newPos.rotation); // change la rotation
+    }
+
+    const playerPositions = [
+      { position: "-11 2.5 0", rotation: "0 -90 0" }, // Rotate towards center from right
+      { position: "11 2.5 0", rotation: "0 90 0" }, // Rotate towards center from left
+      { position: "0 2.5 -11", rotation: "0 180 0" }, // Rotate towards center from back
+      { position: "0 2.5 11", rotation: "0 0 0" } // Default front view, no rotation needed
+    ];
+  });
+</script>
 
       <script>
-
-          document.addEventListener('DOMContentLoaded', () => {
-            
-            
-            const cameraPositions = [
-              { position: "-11 2.5 0", rotation: "0 0 0" }, // Rotate towards center from right
-              { position: "11 2.5 0", rotation: "0 0 0" }, // Rotate towards center from left
-              { position: "0 2.5 -11", rotation: "0 0 0" }, // Rotate towards center from back
-              { position: "0 2.5 11", rotation: "0 0 0" } // Default front view, no rotation needed
-            ];
-            let currentViewIndex = 0;
-            const cameraEl = document.getElementById('player');
-
-            // Gestionnaire pour l'événement xbuttondown
-            cameraEl.addEventListener('xbuttondown', function () {
-              // Mise à jour de l'index de position
-              currentPositionIndex = (currentPositionIndex + 1) % cameraPositions.length;
-              const newPos = cameraPositions[currentPositionIndex];
-              
-              // Mise à jour de la position et de la rotation de la caméra
-              cameraEl.setAttribute('position', newPos.position);
-              cameraEl.setAttribute('rotation', newPos.rotation);
-            });
-            const changeViewButton = document.getElementById('changeCameraView');
-            changeViewButton.addEventListener('click', () => {
-              currentViewIndex = (currentViewIndex + 1) % cameraPositions.length;
-              const newView = cameraPositions[currentViewIndex];
-              const camera = document.querySelector('a-camera');
-              camera.setAttribute('position', newView.position);
-              camera.setAttribute('rotation', newView.rotation);
-            });
-          });
 
 
 
