@@ -46,41 +46,17 @@
       <button id="changeCameraView" style="position: absolute; z-index: 1000; top: 20px; right: 20px;">Changer de Vue</button>
       <!-- Positionnement de la caméra -->
       <a-entity id="player">
-        <a-camera position="0 2.5 11" rotation="0 0 0"></a-camera>
-        <a-entity oculus-touch-controls="hand: left; xr-gesture-handler; buttonXdown: triggerDown; buttonYdown: triggerDown;" xreffid="leftHand"></a-entity>
-        <a-entity oculus-touch-controls="hand: right; xr-gesture-handler; buttonXdown: triggerDown; buttonYdown: triggerDown;" xreffid="rightHand"></a-entity>
+        <a-entity id="camera" camera look-controls position="0 2.5 11"></a-entity>
+      
+        <!-- Contrôleurs Oculus Touch -->
+        <a-entity oculus-touch-controls="hand: left"></a-entity>
+        <a-entity oculus-touch-controls="hand: right"></a-entity>
       </a-entity>
 
       <script>
-function switchCameraView(direction) {
-  const cameraEntity = document.querySelector('#player a-camera');
-  const currentPosition = cameraEntity.getAttribute('position');
-  const targetPosition = getNextPosition(direction);
-  
-  if (!targetPosition) {
-    console.warn("No available position to move");
-    return;
-  }
 
-  const tween = new TWEEN.Tween(currentPosition).to(targetPosition, 500).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(() => {
-    cameraEntity.setAttribute('position', currentPosition);
-  }).start();
-}
-
-const nextViews = [{ direction: 'forward', position: { x: 0, y: 2.5, z: 11 } },
-{ direction: 'backward', position: { x: 0, y: 2.5, z: -11 } },
-{ direction: 'left', position: { x: -11, y: 2.5, z: 0 } },
-{ direction: 'right', position: { x: 11, y: 2.5, z: 0 } }];
-
-function getNextPosition(direction) {
-  const index = nextViews.findIndex(view => view.direction === direction);
-  if (index >= 0 && index < nextViews.length - 1) {
-    return nextViews[index + 1].position;
-  } else {
-    return null;
-  }
-}
           document.addEventListener('DOMContentLoaded', () => {
+            
             
             const cameraPositions = [
               { position: "-11 2.5 0", rotation: "0 0 0" }, // Rotate towards center from right
@@ -89,7 +65,18 @@ function getNextPosition(direction) {
               { position: "0 2.5 11", rotation: "0 0 0" } // Default front view, no rotation needed
             ];
             let currentViewIndex = 0;
+            const cameraEl = document.getElementById('camera');
 
+            // Gestionnaire pour l'événement xbuttondown
+            cameraEl.addEventListener('xbuttondown', function () {
+              // Mise à jour de l'index de position
+              currentPositionIndex = (currentPositionIndex + 1) % cameraPositions.length;
+              const newPos = cameraPositions[currentPositionIndex];
+              
+              // Mise à jour de la position et de la rotation de la caméra
+              cameraEl.setAttribute('position', newPos.position);
+              cameraEl.setAttribute('rotation', newPos.rotation);
+            });
             const changeViewButton = document.getElementById('changeCameraView');
             changeViewButton.addEventListener('click', () => {
               currentViewIndex = (currentViewIndex + 1) % cameraPositions.length;
