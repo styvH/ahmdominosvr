@@ -147,7 +147,7 @@
         });
 
         // Ajout de l'écouteur d'événements pour la sélection
-        document.querySelector('a-scene').addEventListener('click', function(event) {
+        document.querySelector('a-scene').addEventListener('triggerup', function(event) {
           if (event.target && event.target.classList.contains('domino')) {
             // Changement de la couleur du domino sélectionné
             event.target.setAttribute('material', 'color', 'yellow');
