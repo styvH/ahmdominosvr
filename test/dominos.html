@@ -88,7 +88,7 @@
 
 
 
-
+        let selectedDomino = null;
         // Création des dominos
         function createDomino(position, rotation, textureId) {
           // Création de l'entité domino
@@ -118,6 +118,23 @@
           dominoContainer.addEventListener('mouseleave', function() {
             dominoBody.setAttribute('material', 'color', '#FFF');
           });
+
+          dominoContainer.addEventListener('click', function() {
+            if (selectedDomino && selectedDomino !== dominoContainer) {
+              // Réinitialise la couleur de l'ancien domino sélectionné
+              selectedDomino.firstChild.setAttribute('material', 'color', '#FFF');
+            }
+            // Si le domino cliqué est déjà sélectionné, le désélectionner
+            if (selectedDomino === dominoContainer) {
+              dominoContainer.firstChild.setAttribute('material', 'color', '#FFF');
+              selectedDomino = null; // Désélectionner le domino
+            } else {
+              // Sinon, sélectionner le nouveau domino et le mettre en bleu
+              dominoContainer.firstChild.setAttribute('material', 'color', 'blue');
+              selectedDomino = dominoContainer; // Mettre à jour le domino sélectionné
+            }
+          });
+    
 
           // Ajout du domino à la scène
           dominoContainer.appendChild(dominoBody);
