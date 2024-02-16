@@ -55,25 +55,6 @@
         </a-entity>
 
         <script>
-
-          document.addEventListener('DOMContentLoaded', function() {
-            const rightHand = document.getElementById('rightHand');
-
-            // Ajout des écouteurs pour bbuttondown et gripdown
-            rightHand.addEventListener('bbuttondown', selectDomino);
-            rightHand.addEventListener('gripdown', selectDomino);
-
-            function selectDomino() {
-              // Obtient le dernier domino intersecté par le rayon laser
-              const intersectedElement = rightHand.components['laser-controls'].getIntersection();
-
-              if (intersectedElement && intersectedElement.el.classList.contains('domino')) {
-                // Change la couleur du domino en jaune
-                intersectedElement.el.setAttribute('material', 'color', 'yellow');
-              }
-            }
-          });
-
           document.addEventListener('DOMContentLoaded', function() {
             const player = document.getElementById('player');
             const leftHand = document.getElementById('leftHand');
@@ -130,12 +111,20 @@
           dominoFace.setAttribute('height', '1');
           dominoFace.setAttribute('material', `src: #${textureId}`);
 
+          // Ajout des écouteurs pour le changement de couleur au survol
+          dominoContainer.addEventListener('mouseenter', function() {
+            dominoBody.setAttribute('material', 'color', 'blue');
+          });
+          dominoContainer.addEventListener('mouseleave', function() {
+            dominoBody.setAttribute('material', 'color', '#FFF');
+          });
+
           // Ajout du domino à la scène
           dominoContainer.appendChild(dominoBody);
           dominoContainer.appendChild(dominoFace);
 
           document.querySelector('a-scene').appendChild(dominoContainer);
-      }
+        }
 
 
       document.addEventListener('DOMContentLoaded', function() {
